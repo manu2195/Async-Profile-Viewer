@@ -14,6 +14,20 @@ function apiFetcher (url, cb){
     xhr.open('GET', url , true);
     xhr.send(null);
 }
+function apiFetcher2(url)
+{
+    return new Promise((resolve)=>{
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+         if(xhr.readyState==XMLHttpRequest.DONE){
+             let randomObj=JSON.parse(xhr.responseText);
+             resolve(randomObj);
+         }
+        }
+    xhr.open('GET',url,true);
+    xhr.send(null);
+    });
+}
 class ParentProfileViewer extends React.Component {
     constructor(props){
         super(props);
@@ -78,7 +92,8 @@ class DisplayProfiles extends React.Component{
          let noOfProfiles = props.rowInput*props.columnInput;
          if(noOfProfiles>this.state.data.length)
          {
-             apiFetcher('https://randomuser.me/api',this.addUser);
+             //apiFetcher('https://randomuser.me/api',this.addUser); (uncomment this for using with callbacks and comment the next line)
+             apiFetcher2('https://randomuser.me/api').then(this.addUser); //(using promises)
          }
          if(noOfProfiles<this.state.data.length)
          {
