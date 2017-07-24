@@ -104,7 +104,13 @@ class DisplayProfiles extends React.Component{
     addUser = (userObj) => {
         let noOfProfiles= this.props.rowInput*this.props.columnInput;
         let checkState= this.state.data;
-        const nextState = {data: [...this.state.data.slice(0),userObj]};
+        const userProfile = {
+            firstName : userObj.results[0].name.first,
+            lastName: userObj.results[0].name.last,
+            image : userObj.results[0].picture.large,
+            email : userObj.results[0].email
+        }
+        const nextState = {data: [...this.state.data.slice(0),userProfile]};
         this.setState(nextState,() => {
             this.fetchIfRequired(this.props)
             }
@@ -116,12 +122,23 @@ class DisplayProfiles extends React.Component{
         let noOfProfiles = this.props.rowInput*this.props.columnInput;
 
         const listItems = this.state.data.map((value,index)=>{
-            return (<li key = {index}>{value.results[0].email}</li>);
+            return (<li  key = {index}>
+                {value.email}
+                    <div className = "profile">
+                        <div className= "image">
+                            <img src= {value.image} />
+                            </div>
+                        </div>
+                        <div className = "details">
+                            {value.firstName + value.lastName}
+                            </div>
+                            
+                </li>);
         });
         return (
             <div>
             <h1>{this.props.rowInput}, {this.props.columnInput}</h1>
-            {listItems}
+            <div className= "listOfUsers">{listItems}</div>
             <h3>{this.state.data.length}</h3>
             </div>
         );
