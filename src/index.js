@@ -4,11 +4,11 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 const _range = (x) => {
-  const a = [];
-  for (var i = 0; i < x; i++) { 
-    a.push(i);
-  }
-  return a;
+    const a = [];
+    for (var i = 0; i < x; i++) {
+        a.push(i);
+    }
+    return a;
 }
 function apiFetcher(url, cb) {
     var xhr = new XMLHttpRequest();
@@ -122,21 +122,20 @@ class DisplayProfiles extends React.Component {
 
     }
     renderProfile = (userObj) => {
-        return (<div><img src = {userObj.image}/></div>);
+        return (<div><img src={userObj.image} /></div>);
     }
-    renderRow=(i) => {
-         //let index = i*this.props.columnInput+j;
-         const profiles=[];
-         _range(this.props.columnInput).map((v)=>{
-             const index = i*this.props.columnInput +v;
-             if(index<this.state.data.length)
-                {
-                   profiles.push(this.state.data[index]); 
-                }
-         });
+    renderRow = (i) => {
+        //let index = i*this.props.columnInput+j;
+        const profiles = [];
+        _range(this.props.columnInput).map((v) => {
+            const index = i * this.props.columnInput + v;
+            if (index < this.state.data.length) {
+                profiles.push(this.state.data[index]);
+            }
+        });
 
-         return (<div className="rowContainer">{profiles.map(this.renderProfile)}</div>);
-    } 
+        return (<div className="rowContainer">{profiles.map(this.renderProfile)}</div>);
+    }
 
     render() {
         let noOfProfiles = this.props.rowInput * this.props.columnInput;
