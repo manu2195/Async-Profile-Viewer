@@ -3,6 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+const _range = (x) => {
+  const a = [];
+  for (var i = 0; i < x; i++) { 
+    a.push(i);
+  }
+  return a;
+}
 function apiFetcher(url, cb) {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
@@ -62,12 +69,13 @@ class InputForm extends React.Component {
         return (
             <div>
                 <h1>Welcome to the Profile viewer application</h1>
-                <label>
-                    <input type="text" onChange={this.handleRowInputChange} />
+                <label className="rowInputSection">
+                    Rows:<input type="text" onChange={this.handleRowInputChange} />
                 </label>
-                <label><input type="text" onChange={this.handleColumnInputChange} />
+                <label className="columnInputSection">
+                    Column:<input type="text" onChange={this.handleColumnInputChange} />
                 </label>
-                <button onClick={this.handleSubmit}>Save</button>
+                <button className="saveButton" onClick={this.handleSubmit}>Save</button>
             </div>
         );
     }
@@ -113,29 +121,28 @@ class DisplayProfiles extends React.Component {
         );
 
     }
+    renderProfile = (userObj) => {
+        return (<div><img src = {userObj.image}/></div>);
+    }
+    renderRow=(i) => {
+         //let index = i*this.props.columnInput+j;
+         const profiles=[];
+         _range(this.props.columnInput).map((v)=>{
+             const index = i*this.props.columnInput +v;
+             if(index<this.state.data.length)
+                {
+                   profiles.push(this.state.data[index]); 
+                }
+         });
+
+         return (<div className="rowContainer">{profiles.map(this.renderProfile)}</div>);
+    } 
 
     render() {
         let noOfProfiles = this.props.rowInput * this.props.columnInput;
-
-        const listItems = this.state.data.map((value, index) => {
-            return (<li key={index}>
-                {value.email}
-                <div className="profile">
-                    <div className="image">
-                        <img src={value.image} />
-                    </div>
-                </div>
-                <div className="details">
-                    {value.firstName + value.lastName}
-                </div>
-
-            </li>);
-        });
         return (
             <div>
-                <h1>{this.props.rowInput}, {this.props.columnInput}</h1>
-                <div className="listOfUsers">{listItems}</div>
-                <h3>{this.state.data.length}</h3>
+                <div className="container">{_range(this.props.rowInput).map(this.renderRow)}</div>
             </div>
         );
     }

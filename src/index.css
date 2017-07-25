@@ -1,12 +1,19 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+
+.container {
+  display:flex;
+  flex-direction:column;
+  background-color:grey;
+  border:2px solid black;
+  margin: 20px 10px 10px;
+  padding: 10px;
+
 }
-.listOfUsers {
-   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+.rowContainer{
+  display:flex;
+  flex-direction :row;
   justify-content: space-around;
-  width:25%;
+}
+.saveButton{
+  background-color: grey;
+  border-radius: 10%;
 }
